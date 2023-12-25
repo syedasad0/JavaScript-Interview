@@ -18,3 +18,56 @@
 4. Whenever there is a function declaration in the code, a separate local execution context gets created having its own phases and is pushed into the call stack.
 5. Once the function ends, the EC is removed from the call stack.
 6. When the program ends, even the global EC is pulled out of the call stack.
+
+
+//aws
+cat /etc/os-release //to check os release
+free -m
+lscpu
+df -h
+ip a //to get pvt ip address
+sudo -i //to switch to root user
+apt-get update
+nginx -t //to check nginx configuration
+apt-get install nginx //to install nginx
+service nginx status //if nginx is installed 
+cat /var/www/html/index.nginx-debian.html 
+sudo systemctl restart nginx //to restart nginx
+lsblk //to list block storage devices EBS
+
+
+
+curl 169.254.169.254 //to retrive instance data //if this does not work of throws 401 check instance imds, it should be on imdsv1
+//We can reserve 5 IP address in aws free tier but can be extended by writing email.
+//How elastic/static IPs are charged: If instance is in running no bills are charged because anyways aws assigns 1 IP address to your instance
+//but if you've opted elastic IP/IPs but not associated with nay instance or instance is stopped/terminated it will charge money
+//To release static ip, first we need to de-associate the IP from instance
+
+//Elastic Block Storage
+https://learning-ocean.com/tutorials/aws/aws-block-storage
+//EBS volume created under a particular AZ can only be attached with instance created in that AZ
+//EBS volume can be migrated to another availablity zone using snapshot
+//io1 and io2 EBS volumes can be attached to multiple instances
+
+//How to use newly attached EBS 
+//first we need to format it (all drives/blocks in linux are in /dev directory)
+mkfs.ext4 /dev/<vulume_name> //this command needs sudo permission
+//before formatting if you need to check if volume has any data in it?
+sudo file -s /dev/<volume_name> //if this cmd return something like ext4 filesystem data.... do not format it, you can directly mount it to a directory
+Hack: If you forget to add sudo then you can run "sudo !!" it will run your last command with sudo permission
+//create a directory to mount formaated volume to this dorectory
+mkdir <foler_name>
+mount /dev/<volume_name> test /<foler_name>/
+//mountpoint /<folder_name> //to check if this folder is now mounted. now whatever you will store in this folder will be saved in mounted volume
+
+//create a few files in the folder to test it
+
+umount /<folder_name>/ //to unmount the volume //after this cmd the folder will be empty. analogy: you've right click on a usb and reset it but it's still attched to your system
+
+//you may detach the volume from aws console
+//whenever your instance restarts this volume will no longer be mounted by default you can add the configuration in fs tab to make sure this volume does not get unmounted every time your machine restarts
+
+to mount the directly by default we edit the /etc/fstba file.
+the entry would be:
+/test     /dev/xvdf   xfs  defaults  0  0
+
