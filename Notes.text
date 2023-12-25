@@ -55,7 +55,7 @@ mkfs.ext4 /dev/<vulume_name> //this command needs sudo permission
 //before formatting if you need to check if volume has any data in it?
 sudo file -s /dev/<volume_name> //if this cmd return something like ext4 filesystem data.... do not format it, you can directly mount it to a directory
 Hack: If you forget to add sudo then you can run "sudo !!" it will run your last command with sudo permission
-//create a directory to mount formaated volume to this dorectory
+//create a directory to mount formaated volume to this dorectory 
 mkdir <foler_name>
 mount /dev/<volume_name> test /<foler_name>/
 //mountpoint /<folder_name> //to check if this folder is now mounted. now whatever you will store in this folder will be saved in mounted volume
